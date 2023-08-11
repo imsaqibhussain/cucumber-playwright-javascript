@@ -1,18 +1,26 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { chromium } = require('playwright');
 
-         Given('I open the website', function () {
-           // Write code here that turns the phrase above into concrete actions
-           console.log('testing')
-         });
+let browser
+let page
+
+Given('lets open the mtbc career portal {string}', async function (url) {
+  browser = await chromium.launch({ headless: false });
+  page = await browser.newPage();
+  await page.goto(url);
+});
 
 
-         When('I do something', function () {
-           // Write code here that turns the phrase above into concrete actions
-           console.log('testing')
-         });
+When('lets login with {string} and {string}', async function (username, password) {
+  await page.locator('#ctl00_ctl00_BotContent_hrefLogin').click()
+  await page.locator('#ctl00_ctl00_BotContent_loginSignup_email_address').fill(username)
+  await page.locator('#ctl00_ctl00_BotContent_loginSignup_txtpassword').fill(password)
+  await page.locator('#ctl00_ctl00_BotContent_loginSignup_BtnReg').click()
+});
 
-         Then('I should see something', function () {
-           // Write code here that turns the phrase above into concrete actions
-           console.log('testing')
-         });
+Then('logout the career portal', async  function () {
+
+  await page.locator('#ctl00_ctl00_BotContent_hreflogout').click()
+
+  await browser.close();
+});

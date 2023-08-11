@@ -1,5 +1,8 @@
 Feature: Example Feature
-  Scenario: Opening a website
-    Given I open the website
-    When I do something
-    Then I should see something
+  Scenario: mtbc career portal
+    Given lets open the mtbc career portal '<URL>'
+    When lets login with '<username>' and '<password>'
+    Then logout the career portal
+    Examples:
+      | URL                      | username                  | password  |
+      | https://careers.mtbc.com | automation@mailinator.com | Mtbc@1234 |
